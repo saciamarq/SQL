@@ -1,0 +1,37 @@
+-- Create a table candle company database
+
+CREATE TABLE candles (
+    id INTEGER PRIMARY KEY,
+    wax_type TEXT,
+    fragrance TEXT,
+    quantity INTEGER,
+    item_type TEXT,
+    price REAL
+    );
+    
+INSERT INTO candles VALUES (1,"beeswax","Farmhouse Christmas", 1, "pillar",25.00);
+INSERT INTO candles VALUES (2,"beeswax","Bonfire Marshmallow",1,"pillar",25.00);
+INSERT INTO candles VALUES (3,"coconut","Wanderlust",4,"candle",16.00);
+INSERT INTO candles VALUES (4,"beeswax","Harvest Moon",1,"pillar",25.00);
+INSERT INTO candles VALUES (5,"coconut","Sage & Citrus",7,"candle",24.00);
+INSERT INTO candles VALUES (6,"coconut","Wanderlust",7,"candle",24.00);
+INSERT INTO candles VALUES (7,"beeswax","Perfect Autumn Day",7,"candle",26.00);
+INSERT INTO candles VALUES (8,"beeswax","Harvest Moon",7,"candle",26.00);
+INSERT INTO candles VALUES (9,"beeswax","Farmhouse Christmas",7,"candle",26.00);
+INSERT INTO candles VALUES (10,"beeswax","uncented",1,"melt",3.00);
+INSERT INTO candles VALUES (11,"beeswax","Perfect Autumn Day",1,"melt",3.00);
+INSERT INTO candles VALUES (12,"beeswax","Teakwood & Tobacco",1,"melt",3.00);
+INSERT INTO candles VALUES (13,"beeswax","Wanderlust",1,"melt",3.00);
+INSERT INTO candles VALUES (14,"beeswax","Northwoods",7,"candle",26.00);
+INSERT INTO candles VALUES (15,"beeswax","Sage & Citrus",7,"candle",26.00);
+INSERT INTO candles VALUES (16,"beeswax","Teakwood & Tobacco",7,"candle",26.00);
+INSERT INTO candles VALUES (17,"beeswax","Magical Brew",2,"candle",12.00);
+
+-- display inventory ordered by wax type
+SELECT * FROM candles ORDER BY wax_type;
+
+-- How many of each fragrance are in inventory regardless of wax type?
+SELECT fragrance, SUM(quantity) FROM candles GROUP BY fragrance;
+
+-- How many candles of each wax type are made?
+SELECT id, wax_type,COUNT(wax_type) FROM candles GROUP BY wax_type ORDER BY id; 
