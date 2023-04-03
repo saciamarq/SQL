@@ -1,0 +1,158 @@
+-- Create table of Top 10 NFL Pass Targets 2022
+CREATE TABLE nfl_pass_targets (
+  id INTEGER PRIMARY KEY,
+  name TEXT,
+  curr_team TEXT,
+  number INTEGER,
+  position TEXT);
+  
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Davante Adams", "Raiders", 17, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Justin Jefferson", "Vikings", 18, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Tyreek Hill", "Dolphins", 10, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Stefon Diggs", "Bills", 14, "WR");
+  INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Diontae Johnson", "Steelers", 18, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Travis Kelce", "Chiefs", 87, "TE");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("CeeDee Lamb", "Cowboys", 88, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("A.J. Brown", "Steelers", 11, "WR");
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("DK Metcalf", "Seahawks", 14, "WR"); 
+INSERT INTO nfl_pass_targets (name, curr_team, number, position)
+  VALUES ("Amon-Ra St. Brown", "Lions", 14, "WR"); 
+  
+SELECT * FROM nfl_pass_targets LIMIT 3;
+
+-- Create table of Pass Targets College Data
+
+CREATE TABLE college (
+  id INTEGER PRIMARY KEY,
+  playerid INTEGER,
+  name TEXT,
+  number INTEGER);
+  
+INSERT INTO college (playerid,name, number)
+  VALUES (1, "California State University, Fresno", 15);
+INSERT INTO college (playerid, name, number)
+  VALUES (2, "LSU", 18);
+INSERT INTO college (playerid, name, number)
+  VALUES (3, "Oklahoma State", 11);
+INSERT INTO college (playerid, name, number)
+  VALUES (4, "Maryland", 1);
+INSERT INTO college (playerid, name, number)
+  VALUES (5, "Toledo", 18);
+INSERT INTO college (playerid, name, number)
+  VALUES (6, "University of Cincinnati", 8);
+INSERT INTO college (playerid,name, number)
+  VALUES (6, "University of Cincinnati", 18);
+INSERT INTO college (playerid,name, number)
+  VALUES (7, "Oklahoma", 9);
+INSERT INTO college (playerid,name, number)
+  VALUES (8, "Ole Miss", 1);
+INSERT INTO college (playerid,name, number)
+  VALUES (9, "Ole Miss", 14);
+INSERT INTO college (playerid,name, number)
+  VALUES (10, "USC", 8);
+  
+SELECT * FROM college LIMIT 3;
+
+-- Create table of player stats
+
+CREATE TABLE stats (
+  id INTEGER PRIMARY KEY,
+  completions REAL,
+  targets REAL,
+  tds REAL);
+  
+INSERT INTO stats (completions, targets, tds)
+  VALUES (89, 153, 12);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (101, 148, 7);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (104, 146, 6);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (97, 141, 11);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (80, 130, 2);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (95, 128, 13);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (84, 127, 6);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (80, 125, 12);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (82, 124, 7);
+INSERT INTO stats (completions, targets, tds)
+  VALUES (92, 123, 6);
+
+SELECT * FROM stats LIMIT 3;
+
+CREATE TABLE teams (
+  id INTEGER PRIMARY KEY,
+  playerid INTEGER,
+  team TEXT,
+  year_from TEXT,
+  year_to TEXT );
+  
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (1, "Green Bay Packers", 2014, 2021);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (1, "Las Vegas Raiders", 2022, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (2, "Minnesota Vikings", 2020, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (3, "Kansas City Chiefs", 2016, 2021);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (3, "Miami Dolphins", 2022, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (4, "Minnesota Vikings", 2015, 2019);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (4, "Buffalo Bills", 2020, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (5, "Pittsburgh Steelers", 2019, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (6, "Kansas City Chiefs", 2013, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (7, "Dallas Cowboys", 2020, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (8, "Tennessee Titans", 2019, 2021);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (8, "Philadelphia Eagles", 2022, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (9, "Seattle Seahawks", 2019, 2023);
+INSERT INTO teams (playerid, team, year_from, year_to)
+  VALUES (10, "Detroit Lions", 2021, 2023);
+  
+SELECT * FROM teams LIMIT 3;
+
+-- View players player team history
+
+SELECT a.name, b.name AS college_name, c.team AS nfl_team, c.year_from, c.year_to
+  FROM nfl_pass_targets a
+  JOIN college b
+  ON a.id = b.playerid
+  JOIN teams c
+  on a.id = c.playerid;
+
+-- Who went to college together?
+
+SELECT nfl_pass_targets.name, college.name
+FROM nfl_pass_targets
+LEFT OUTER JOIN college
+ON nfl_pass_targets.id = college.playerid
+GROUP BY nfl_pass_targets.name
+ORDER BY college.name;
+
+-- Who caught the most passes?
+
+SELECT nfl_pass_targets.name, stats.completions FROM nfl_pass_targets
+JOIN stats
+ON nfl_pass_targets.id = stats.id
+GROUP BY nfl_pass_targets.name
+ORDER BY stats.completions DESC;
