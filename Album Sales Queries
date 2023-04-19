@@ -137,3 +137,23 @@ SELECT e.FirstName, e.LastName, ROUND(SUM(i.Total),2) AS "total_sales"
 SELECT FirstName, LastName, MAX(total_sales) AS "most_total_sales"
 FROM sales
 ;
+
+-- Which genre has been added to the most playlists?
+
+SELECT g.Name, COUNT(p.PlaylistId) AS playlist_adds
+
+FROM tracks t
+
+JOIN genres g
+ON t.GenreId = g.GenreId
+
+JOIN playlist_track pt
+ON t.TrackId = pt.TrackId
+
+JOIN playlists p
+ON pt.PlaylistId = p.PlaylistId
+
+GROUP BY g.Name 
+ORDER BY playlist_adds DESC
+LIMIT 1
+;
