@@ -1,3 +1,5 @@
+# I have created several tables in this analysis, the queries begin at row 136 and include JOINs
+
 -- Create table of Top 10 NFL Pass Targets 2022
 CREATE TABLE nfl_pass_targets (
   id INTEGER PRIMARY KEY,
@@ -27,6 +29,7 @@ INSERT INTO nfl_pass_targets (name, curr_team, number, position)
 INSERT INTO nfl_pass_targets (name, curr_team, number, position)
   VALUES ("Amon-Ra St. Brown", "Lions", 14, "WR"); 
   
+-- Query to verify the table is performing as expected.
 SELECT * FROM nfl_pass_targets LIMIT 3;
 
 -- Create table of Pass Targets College Data
@@ -59,7 +62,8 @@ INSERT INTO college (playerid,name, number)
   VALUES (9, "Ole Miss", 14);
 INSERT INTO college (playerid,name, number)
   VALUES (10, "USC", 8);
-  
+
+-- Query to verify the table is performing as expected.
 SELECT * FROM college LIMIT 3;
 
 -- Create table of player stats
@@ -91,6 +95,7 @@ INSERT INTO stats (completions, targets, tds)
 INSERT INTO stats (completions, targets, tds)
   VALUES (92, 123, 6);
 
+-- Query to verify the table is performing as expected.
 SELECT * FROM stats LIMIT 3;
 
 CREATE TABLE teams (
@@ -128,10 +133,11 @@ INSERT INTO teams (playerid, team, year_from, year_to)
   VALUES (9, "Seattle Seahawks", 2019, 2023);
 INSERT INTO teams (playerid, team, year_from, year_to)
   VALUES (10, "Detroit Lions", 2021, 2023);
-  
+
+-- Query to verify the table is performing as expected.
 SELECT * FROM teams LIMIT 3;
 
--- View players player team history
+-- View players team history
 
 SELECT a.name, b.name AS college_name, c.team AS nfl_team, c.year_from, c.year_to
   FROM nfl_pass_targets a
