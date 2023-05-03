@@ -1,12 +1,47 @@
--- What is the average danceability by artist and track?
 
-SELECT DISTINCT artist_name, track_name, AVG(danceability)
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# I Finished by performing analytics on the data using SQL. 
+
+
+# Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+# I then inserted the Spotify data .csv into the table and began exploring the data using the following SQL.
+
+
+# I determined the average danceability, average energy and average tempo for the songs of each artist in the Spotify Top 50 and made the column names easy to read.
+
+SELECT artist_name, 
+    ROUND(AVG(danceability),2) as [average danceability],
+    ROUND(AVG(energy),2) as [average energy],
+    ROUND(AVG(tempo),2) as [average tempo]
 FROM BIT_DB.Spotifydata
 GROUP BY artist_name
-ORDER BY artist_name, track_name
+ORDER BY artist_name
 ;
 
--- Who are the top 10 artists based on popularity? 
+
+# Next, I found the top 10 artists based on popularity.
 
 SELECT artist_name
 FROM BIT_DB.Spotifydata
@@ -15,25 +50,14 @@ ORDER BY popularity DESC
 LIMIT 10
 ;
 
--- What artist released the longest song? 
+# Then, I found every track and its popularity by a specific artist.
 
-SELECT artist_name as [This artist released the longest song]
+SELECT artist_name, track_name, popularity
 FROM BIT_DB.Spotifydata
-GROUP BY artist_name
-ORDER BY duration_ms DESC
-LIMIT 1
+WHERE artist_name = 'Doja Cat'
 ;
 
--- What's the average danceability for the 10 most popular songs?
-
-SELECT artist_name, SUM(danceability/10)
-FROM BIT_DB.Spotifydata
-WHERE popularity >= 90
-GROUP BY artist_name
-LIMIT 10
-;
-
--- Which artists have multiple songs in the Top 50?
+# Finaly, I found which artists have multiple songs in the Top 50 and how many they have.
 
 SELECT artist_name, COUNT(artist_name) AS num_songs_on_list
 FROM BIT_DB.Spotifydata
