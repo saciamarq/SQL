@@ -3,7 +3,7 @@
 SELECT FirstName, LastName, CustomerId, Country 
 FROM customers
 WHERE Country <> "USA"
-
+;
 
 -- Show only the Customers from Brazil.
 
