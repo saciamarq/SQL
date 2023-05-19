@@ -27,11 +27,21 @@ INSERT INTO candles VALUES (15,"beeswax","Sage & Citrus",7,"candle",26.00);
 INSERT INTO candles VALUES (16,"beeswax","Teakwood & Tobacco",7,"candle",26.00);
 INSERT INTO candles VALUES (17,"beeswax","Magical Brew",2,"candle",12.00);
 
--- display inventory ordered by wax type
-SELECT * FROM candles ORDER BY wax_type;
+-- display inventory ordered by wax type, then fragrance, and finally item_type
+SELECT * 
+FROM candles 
+ORDER BY wax_type, fragrance, item_type
+;
 
 -- How many of each fragrance are in inventory regardless of wax type?
-SELECT fragrance, SUM(quantity) FROM candles GROUP BY fragrance;
+SELECT fragrance, SUM(quantity) 
+FROM candles 
+GROUP BY fragrance
+;
 
--- How many candles of each wax type are made?
-SELECT id, wax_type,COUNT(wax_type) FROM candles GROUP BY wax_type ORDER BY id; 
+-- Show how many candles of each wax type are in inventory and list by wax type alphabetically
+SELECT wax_type, COUNT(wax_type) 
+FROM candles 
+GROUP BY wax_type 
+ORDER BY wax_type
+; 
