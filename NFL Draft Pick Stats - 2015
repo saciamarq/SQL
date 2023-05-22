@@ -207,44 +207,41 @@ INSERT INTO picks (pick_number, name, college, picked_by, position)
 INSERT INTO picks (pick_number, name, college, picked_by, position)
 	VALUES(99,"Paul Dawson","TCU","Cincinnati","OLB");
   
--- Which position was picked the most frequently - Top 5? 
 
-SELECT position,COUNT(position) AS times_picked from picks 
-WHERE id > 5 
-GROUP BY position 
-ORDER BY times_picked DESC 
-LIMIT 5;
+-- What were the top 5 positions picked?
+
+SELECT position, COUNT(position) as times_picked
+FROM picks
+GROUP BY position
+ORDER BY times_picked DESC
+LIMIT 5
+;
 
 -- Was offense or defense picked more?
 
 SELECT
     CASE 
-        WHEN position = "QB"THEN "offense"
-        WHEN position = "RB" THEN "offense"
-        WHEN position = "FB" THEN "offense"
-        WHEN position = "WR" THEN "offense"
-        WHEN position = "TE" THEN "offense"
-        WHEN position = "C" THEN "offense"
-        WHEN position = "LG" THEN "offense"
-        WHEN position = "RG" THEN "offense"
-        WHEN position = "G" THEN "offense"
-        WHEN position = "LT" THEN "offense"
-        WHEN position = "RT" THEN "offense"
-        WHEN position = "T" THEN "offense"
+        WHEN position IN ("QB", "RB", "FB", "WR", "TE", "C", "LG", "RG", "G", "LT", "RT", "T") 
+        THEN "offense"
         ELSE "defense"
     END as "scrimmage_side",
-    COUNT(position) 
-FROM picks GROUP BY scrimmage_side;
+    COUNT(position) as times_picked
+FROM picks 
+GROUP BY scrimmage_side;
 
 -- Which colleges that had more than 4 players picked in the draft 
 
 SELECT college, COUNT(college) AS times_picked FROM picks 
 GROUP BY college 
-HAVING times_picked > 4;
+HAVING times_picked > 4
+ORDER BY times_picked DESC
+;
 
--- See all Wide Receivers picked. Include Tight Ends picked before pick 70. 
-SELECT position, name, pick_number FROM picks 
-WHERE position = "TE" 
+-- See all Wide Receivers picked. Include Tight Ends if picked before pick number 70. 
+
+SELECT position, name, pick_number 
+FROM picks 
+WHERE position IN ("TE", "WR")
 AND pick_number < 70 
-OR position = "WR" 
-ORDER BY pick_number;
+ORDER BY pick_number
+;
